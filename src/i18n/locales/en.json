@@ -1,0 +1,16 @@
+{
+    "welcomeMessage": "Welcome to the Posts Application",
+    "toggleTheme": "Toggle Theme",
+    "pageTitle": "Posts",
+    "noPosts": "No posts available.",
+    "loadMore": "Load More",
+    "postDetails": "Post Details",
+    "author": "Author",
+    "date": "Date",
+    "comments": "Comments",
+    "comment": "Comment",
+    "submitComment": "Submit Comment",
+    "commentPlaceholder": "Write a comment...",
+    "commentPosted": "Comment posted successfully!",
+    "commentError": "An error occurred while posting your comment."
+  }
