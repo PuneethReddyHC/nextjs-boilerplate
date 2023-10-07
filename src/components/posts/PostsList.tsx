@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useCallback} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import { RootState } from '../../redux/store';
-import { CircularProgress, List, ListItem, ListItemText, Button } from '@mui/material';
+import { CircularProgress, List, ListItem, ListItemText} from '@mui/material';
 import { fetchPosts } from '../../redux/posts/actions';
 import { useRouter } from 'next/router';
+import { Post } from '@/types/Posts';
 const PostsList: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<RootState, undefined, AnyAction>>();
   const router = useRouter();
   const posts = useSelector((state: RootState) => state.posts.posts);
   const loading = useSelector((state: RootState) => state.posts.loading.fetchPosts);
@@ -15,31 +18,36 @@ const PostsList: React.FC = () => {
   const lastPostRef = useRef<HTMLLIElement | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
-const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-  const entry = entries[0];
-  if (entry.isIntersecting && hasMore && !loading) {
-    handleLoadMore();
-  }
-};
-
-useEffect(() => {
-  observer.current = new IntersectionObserver(handleIntersection, {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1,
-  });
-
-  if (lastPostRef.current) {
-    observer.current.observe(lastPostRef.current);
-  }
-
-  return () => {
-    if (observer.current) {
-      observer.current.disconnect();
+  const handleLoadMore = useCallback(() => {
+    if (!loading && hasMore) {
+      dispatch(fetchPosts(currentPage));
     }
-  };
-}, [currentPage, hasMore, loading]);
+  }, [loading, hasMore, dispatch, currentPage]);
 
+  const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+    if (entry.isIntersecting && hasMore && !loading) {
+      handleLoadMore();
+    }
+  }, [hasMore, loading, handleLoadMore]);
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    });
+
+    if (lastPostRef.current) {
+      observer.current.observe(lastPostRef.current);
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, [currentPage, handleIntersection, lastPostRef]);
 
   // Fetch posts when the component mounts and when currentPage changes
   useEffect(() => {
@@ -52,16 +60,12 @@ useEffect(() => {
     router.push(`/posts/${postId}`);
   };
 
-  const handleLoadMore = () => {
-    if(!loading && hasMore){
-      dispatch(fetchPosts(currentPage));
-    }
-  };
+  
 
   return (
     <div>
       <List component="nav">
-        {posts.map((post, index) => (
+        {posts.map((post : Post, index: number) => (
           <ListItem
             key={post.id}
             onClick={() => handlePostClick(post.id)}

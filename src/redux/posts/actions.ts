@@ -22,7 +22,7 @@ export const fetchPostById = createAsyncThunk(
       try {
         // Check if the post with the given ID already exists in the store
         const state = getState() as RootState;
-        const existingPost = state.posts.posts.find((post : Post) => post.id == postId);
+        const existingPost = state.posts.posts.find((post : Post) => post.id === postId);
   
         if (existingPost) {
           // If the post already exists, return it directly from the store
@@ -40,7 +40,6 @@ export const fetchPostById = createAsyncThunk(
       }
     }
   );
-  
 
 export const addPost = createAction<string>('ADD_POST');
 export const deletePost = createAction<string>('DELETE_POST');

@@ -1,6 +1,6 @@
 // src/redux/posts/reducer.ts
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchPosts, fetchPostById } from './actions';
 import { Post } from "../../types/Posts";
 

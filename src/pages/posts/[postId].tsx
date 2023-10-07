@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import { useRouter } from 'next/router';
 import { Paper, Typography, Button, CircularProgress } from '@mui/material'; // Import MUI components
 import { RootState } from '../../redux/store';
@@ -8,7 +10,7 @@ import { Meta } from '@/layout/Meta';
 
 const PostDetails = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<RootState, undefined, AnyAction>>();
   const selectedPost = useSelector((state: RootState) => state.posts.selectedPost);
   const loading = useSelector((state: RootState) => state.posts.loading.fetchPostById);
 
@@ -17,9 +19,7 @@ const PostDetails = () => {
 
   // Fetch post details when the component mounts
   useEffect(() => {
-    if (postId) {
-      dispatch(fetchPostById(postId)); // Fetch post details by postId
-    }
+    dispatch(fetchPostById(postId as string)); // Fetch post details by postId
   }, [postId, dispatch]);
 
   // Handle the case when data is still loading

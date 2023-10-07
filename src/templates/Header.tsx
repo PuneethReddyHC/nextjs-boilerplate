@@ -5,7 +5,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'; // Import the ico
 import { useTheme } from '../themes/ThemeContext'; // Import the useTheme hook
 
 const Header: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   return (
     <AppBar position="static">

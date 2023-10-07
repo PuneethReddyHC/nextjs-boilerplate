@@ -1,5 +1,4 @@
 import PostsList from '@/components/posts/PostsList';
-import { Base } from '../templates/base';
 import { Meta } from '@/layout/Meta';
 
 const Index = () => {

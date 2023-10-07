@@ -1,5 +1,4 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
-import { FontFamily } from '@mui/material/styles';
 
 export interface CustomTheme {
   primaryColor: string;
@@ -24,7 +23,7 @@ export interface CustomTheme {
     };
   };
   typography: {
-    fontFamily:  FontFamily | undefined;
+    fontFamily: string[] | undefined;
     fontWeightBold: number;
     h1: {
       fontSize: number;
@@ -84,7 +83,7 @@ export const createMuiTheme = (customTheme: CustomTheme): ThemeOptions => {
       },
     },
     typography: {
-      fontFamily: customTheme.typography.fontFamily,
+      // fontFamily: customTheme.typography.fontFamily,
       fontWeightBold: customTheme.typography.fontWeightBold,
       h1: {
         fontSize: customTheme.typography.h1.fontSize,
