@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: List Files in Artifacts
+        run: ls -R ${{ github.workspace }}
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
