@@ -19,6 +19,8 @@ const PostsList: React.FC = () => {
   const observer = useRef<IntersectionObserver | null>(null);
 
   const handleLoadMore = useCallback(() => {
+    console.log(process.env.API_ENDPOINT);
+    
     if (!loading && hasMore) {
       dispatch(fetchPosts(currentPage));
     }

@@ -12,8 +12,8 @@ interface ErrorResponse {
 }
 
 const apiConfig: ApiConfig = {
-  baseURL: 'https://jsonplaceholder.typicode.com', // Replace with your API base URL
-  timeout: 10000, // Adjust the timeout as needed
+  baseURL: process.env.API_ENDPOINT || "", // Replace with your API base URL
+  timeout: Number(process.env.API_TIMEOUT) || 10000, // Adjust the timeout as needed
 };
 
 const axiosInstance: AxiosInstance = axios.create(apiConfig);
