@@ -9,16 +9,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Download build artifacts
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download Build Artifacts
         uses: actions/download-artifact@v2
         with:
           name: build-artifacts
-          path: build
+          path: build  # Change this to match your build output directory
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: test-app  # Replace with your Azure App Service name
+          app-name: your-app-name  # Replace with your Azure App Service name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
